@@ -1,32 +1,55 @@
-//const readFile = require ('fs');
-const fs = require ('fs');
-const path = require ('path');
-// const fs = require ('fs')
-// const fs = require ('fs')
+const fs = require('fs');
+const path = require('path');
+const marked = require('marked')
 
 
-function readFile(file){
+//console.log(path);
+const leerFile = (path) => {
+  let result = [];
   return new Promise((resolve, reject) => {
-    fs.readFile(file, (err, date) => {
+    fs.readFile(path, 'utf-8', (err, date) => {
       if(err){
         reject(err)
       }
-      resolve(date)
+      else{
+        const renderer = new marked.Renderer();
+        renderer.link = function(href, title, text){
+          console.log("hola")
+          result.push({
+            href: href,
+            text: text,
+            file: path
+          })
+        }
+        marked(date, { renderer: renderer })
+        resolve(result)
+      }
     })
   })
 }
 
-function writeFile(file, date){
-  return new Promise((resolve, reject) => {
-    fs.writeFile(file, date, (err) => {
-      resolve()
-    })
-  })
-}
+leerFile('../Laboratoria/SCL012-Cipher/README.md')
+  .then(result => console.log(result))
+  .catch(err => console.log(err))
 
-readFile('./README.md')
-.then(date => writeFile('./cantidad.txt', date.length))
-.catch(err => console.log('error: ' + err))
+
+
+
+
+
+
+
+// function writeFile(file, date){
+//   return new Promise((resolve, reject) => {
+//     fs.writeFile(file, date, (err) => {
+//       resolve()
+//     })
+//   })
+// }
+
+// readFile('./README.md')
+// .then(date => writeFile('./cantidad.txt', date.length))
+// .catch(err => console.log('error: ' + err))
 
 
 
