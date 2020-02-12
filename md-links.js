@@ -14,7 +14,6 @@ const leerFile = (path) => {
       else{
         const renderer = new marked.Renderer();
         renderer.link = function(href, title, text){
-          console.log("hola")
           result.push({
             href: href,
             text: text,
@@ -28,9 +27,33 @@ const leerFile = (path) => {
   })
 }
 
-leerFile('../Laboratoria/SCL012-Cipher/README.md')
-  .then(result => console.log(result))
-  .catch(err => console.log(err))
+// leerFile('../Laboratoria/SCL012-Cipher/README.md')
+//   .then(result => console.log(result))
+//   .catch(err => console.log(err))
+
+
+const route = (routefile) => {
+  return new Promise((resolve, reject) => {
+    fs.stat(routefile, (err, stat) => {
+      if(stat.isDirectory()){
+        console.log("es valido")
+        resolve(true)
+      }
+      else{
+        console.log("false")
+        reject(err)
+      }
+    })
+  })
+}
+
+route('../Laboratoria/SCL012-Cipher')
+
+
+
+
+
+
 
 
 
