@@ -4,6 +4,6 @@
   "dependencies": {
     "fetch": "^1.1.0",
     "marked": "^0.8.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.7"
   }
 }
